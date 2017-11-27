@@ -1,0 +1,24 @@
+#工程的名称及最后生成文件的名字
+TARGET = LED_project
+
+#设定零时性环境变量
+export CC		= arm-none-eabi-gcc
+export AS		= arm-none-eabi-as
+export LD		= arm-none-eabi-ld
+export OBJCOPY	= arm-none-eabi-objcopy
+
+#读取当前工作目录
+TOP=$(shell pwd)
+
+#设定包含文件目录
+INC_FLAGS= -I $(TOP)/CORE	\
+		   -I $(TOP)/HARDWARE	\
+		   -I $(TOP)/SYSTEM	\
+		   -I $(TOP)/USER	\
+		   -I $(TOP)/STM32F10x_FWLib/inc	
+
+CFLAGS= -W Wall -g -mcpu=cortex-m3 -mthumb -D STM32F10X_HD -D USE_STDPERIPH_DRIVER $(INC_FLAGS)
+C_SRC=$(shell find ./ -name '*.c')
+C_OBJ=$(C_SRC:%.c=%.o)
+
+.PHONY:
